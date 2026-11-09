@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 interface LockScreenProps {
   onUnlock: () => void;
-  correctPassword: string;
+  correctPassword: string | string[];
 }
 
 export function LockScreen({ onUnlock, correctPassword }: LockScreenProps) {
@@ -11,7 +11,13 @@ export function LockScreen({ onUnlock, correctPassword }: LockScreenProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password.trim().toLowerCase() === correctPassword.toLowerCase()) {
+    const cleanInput = password.trim().toLowerCase();
+
+    const isMatch = Array.isArray(correctPassword)
+      ? correctPassword.some(p => p.toLowerCase() === cleanInput)
+      : cleanInput === correctPassword.toLowerCase();
+
+    if (isMatch) {
       onUnlock();
       setError(false);
     } else {
@@ -43,7 +49,7 @@ export function LockScreen({ onUnlock, correctPassword }: LockScreenProps) {
             Acceso Privado 🔒
           </h1>
           <p className="text-sm text-neutral-400 font-light leading-relaxed px-4">
-            La contraseña es aquella a lo que nos recuerda esta canción (todo junto).
+            La contraseña es aquella a lo que nos recuerda esta canción (ponlo todo junto).
           </p>
         </div>
 

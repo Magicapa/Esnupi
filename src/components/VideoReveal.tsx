@@ -1,45 +1,69 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function VideoReveal() {
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(false);
+
+  useEffect(() => {
+    const BOT_TOKEN = '9122319242:AAFqVzdDYLhqitMNhm4Q40D1aLgfWqi3WXw';
+    const CHAT_ID = '6444533029';
+    const message = '🎉 ¡Alguien acaba de introducir la contraseña correcta y ha entrado a la web!';
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: message,
+      }),
+    }).catch((err) => console.error('Error al notificar:', err));
+  }, []);
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-200 flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-sm space-y-8 flex flex-col items-center">
+    <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center p-6 text-neutral-200">
+      <div className="w-full max-w-md space-y-6 text-center flex flex-col items-center">
+        <h1 className="text-xl font-light text-neutral-100">¡Acceso concedido!</h1>
         
-        {/* Contenedor del Vídeo vertical con el spinner de carga */}
-        <div className="relative aspect-9/16 w-full rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800 shadow-2xl flex items-center justify-center">
-          
-          {/* Icono de carga (Spinner) que se muestra mientras el vídeo no esté listo */}
-          {!isVideoLoaded && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-neutral-950 z-10 space-y-3">
-              <div className="w-8 h-8 border-2 border-neutral-600 border-t-neutral-100 rounded-full animate-spin" />
-              <span className="text-xs text-neutral-400 font-light tracking-wider">Cargando recuerdo...</span>
+        {/* Contenedor vertical para el vídeo */}
+        <div className="w-[380px] h-[640px] rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-900">
+          <video 
+            controls 
+            onEnded={() => setVideoEnded(true)}
+            className="w-full h-full object-cover"
+          >
+            <source src="./video.mp4" type="video/mp4" />
+            Tu navegador no soporta el vídeo.
+          </video>
+        </div>
+
+        {/* Bloque de texto con animación de aparición suave */}
+        <div 
+          className={`w-full transition-all duration-700 ease-out transform ${
+            videoEnded 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-4 pointer-events-none'
+          }`}
+        >
+          {videoEnded && (
+            <div className="p-6 bg-neutral-900/80 border border-neutral-800 rounded-2xl space-y-2 shadow-xl">
+<p className="text-neutral-100 font-light tracking-wide text-sm leading-relaxed">
+                Cuando hablo de nuestra relación, cuando veo una pareja, cuando recuerdo Tenerife, cuando estoy dando un paseo con Calima, cuando me lo paso bien y no estás, cuando lo paso mal y no estás... Este es el tipo de recuerdos que me vienen a la cabeza.
+              </p>
+              
+              <p className="text-neutral-100 font-light tracking-wide text-sm leading-relaxed">
+                Soy buen conocedor de lo bien que maquilla la mente todos aquellos momentos, de cómo hace una recopilación donde una vez fui feliz contigo, junto a una canción bonita que me hayas enseñado. Por eso, por mucho que todo eso me ponga nostálgico, lo que realmente me duele es vivir mi día a día y darme cuenta de que alguien como tú es difícil de conocer.
+              </p>
+
+              <p className="text-neutral-100 font-light tracking-wide text-sm leading-relaxed">
+                No he querido interferir en tu vida; por eso he decidido hacer esta página con este vídeo, el cual no te voy a mandar de forma directa.
+              </p>
+
+              <p className="text-neutral-100 font-light tracking-wide text-sm leading-relaxed">
+                Si el vídeo te ha gustado y te apetece que hablemos, escríbeme. Así sabré que no soy el único con ganas de sentarse a charlar de lo que sea.
+              </p>
             </div>
           )}
-
-          <video
-            src="/video.mp4"
-            className="w-full h-full object-cover"
-            controls
-            autoPlay
-            playsInline
-            onCanPlayThrough={() => setIsVideoLoaded(true)}
-          />
         </div>
-
-        {/* Texto de la nota */}
-        <div className="space-y-4 text-center max-w-lg mx-auto">
-          <p className="text-sm md:text-base text-neutral-300 leading-relaxed font-light">
-            He hecho este vídeo porque hay cosas que se quedan grabadas sin pedir permiso. Sé que las relaciones no son solo momentos bonitos y que las cosas cayeron por su propio peso, pero al ver esto solo me sale agradecer lo que fuimos.
-          </p>
-          <p className="text-sm md:text-base text-neutral-400 leading-relaxed font-light">
-            Si alguna vez te apetece sentarte a hablar de cero, sin inercias ni mochilas del pasado, escríbeme. La puerta sigue abierta.
-          </p>
-        </div>
-
       </div>
-    </main>
+    </div>
   );
 }
-

@@ -9,12 +9,12 @@ export const Route = createFileRoute('/')({
 
 function HomeComponent() {
   const [unlocked, setUnlocked] = useState(false);
-  const CORRECT_PASSWORD = 'rofeycalima'; // Cámbiala por la clave real
+  const VALID_PASSWORDS = ['rofeycalima', 'rofecalima'];
 
   if (!unlocked) {
     return (
       <LockScreen 
-        correctPassword={CORRECT_PASSWORD} 
+        correctPassword={VALID_PASSWORDS} 
         onUnlock={() => setUnlocked(true)} 
       />
     );
