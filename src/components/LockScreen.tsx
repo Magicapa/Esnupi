@@ -38,9 +38,9 @@ export function LockScreen({ onUnlock, correctPassword }: LockScreenProps) {
               className="w-full h-full object-cover"
             />
           </div>
-          <p className="text-xs text-neutral-100 font-light tracking-wide">
-            Imagen para que sepas que tiene que ver contigo
-          </p>
+        <p className="text-xs text-neutral-100 font-light tracking-wide">
+          (Imagen para que sepas que tiene que ver contigo)
+        </p>
         </div>
 
         {/* Títulos y descripción organizados */}
@@ -49,7 +49,7 @@ export function LockScreen({ onUnlock, correctPassword }: LockScreenProps) {
             Acceso Privado 🔒
           </h1>
           <p className="text-sm text-neutral-400 font-light leading-relaxed px-4">
-            La contraseña es aquella a lo que nos recuerda esta canción (ponlo todo junto).
+            La contraseña es el estribillo que me invente con esta canción de fondo🔽🔽 (que literalmente son dos palabras) y puede que pelusa de vez en cuando.
           </p>
         </div>
 
