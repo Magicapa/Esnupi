@@ -24,8 +24,9 @@ export function VideoReveal() {
         <h1 className="text-xl font-light text-neutral-100">¡Acceso concedido!</h1>
         
         {/* Contenedor vertical para el vídeo */}
-        <div className="w-[380px] h-[640px] rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-900">
+        <div className="w-380px h-640px rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl bg-neutral-900">
           <video 
+            autoPlay
             controls 
             onEnded={() => setVideoEnded(true)}
             className="w-full h-full object-cover"
